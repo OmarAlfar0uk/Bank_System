@@ -3,8 +3,10 @@
 #include <cctype>
 using namespace std;
 
+// Validation Class for name, password, balance, and salary validations
 class Validation {
 public:
+    // Validate name (alphabetic and between 5 and 20 characters)
     bool IsValidation(string name) {
         if (name.size() < 5 || name.size() > 20) {
             return false;
@@ -17,6 +19,7 @@ public:
         return true;
     }
 
+    // Validate password (between 8 and 20 characters)
     bool IsValidationPassword(string password) {
         if (password.size() < 8 || password.size() > 20) {
             return false;
@@ -24,30 +27,31 @@ public:
         return true;
     }
 
+    // Validate balance (must be >= 1500)
     bool IsValidationBalance(double balance) {
         if (balance < 1500) {
             return false;
         }
         return true;
     }
-    bool IsValidationSalary(double& s)
-    {
-        if (s < 5000) {
 
+    // Validate salary (must be >= 5000)
+    bool IsValidationSalary(double& s) {
+        if (s < 5000) {
             return false;
         }
-
         return true;
     }
-
 };
 
+// Client Class inheriting from Validation
 class Clint : public Validation {
 private:
     int id;
     string name, password;
     double balance;
 public:
+    // Setters and Getters for Client details
     void SetId(int id) {
         this->id = id;
     }
@@ -80,7 +84,7 @@ public:
         }
     }
 
-    string grtPassword() {
+    string getPassword() {
         return password;
     }
 
@@ -98,6 +102,7 @@ public:
         return balance;
     }
 
+    // Deposit function
     void deposit(double amount) {
         if (amount > 0) {
             balance += amount;
@@ -108,6 +113,7 @@ public:
         }
     }
 
+    // Withdraw function
     void withdraw(double amount) {
         if (amount > 0 && amount <= balance) {
             balance -= amount;
@@ -121,6 +127,7 @@ public:
         }
     }
 
+    // Transfer function
     void transferTo(double amount, Clint& recipient) {
         if (amount > 0 && amount <= balance) {
             balance -= amount;
@@ -135,11 +142,12 @@ public:
         }
     }
 
-
+    // Check current balance
     void checkBalance() {
         cout << "Current balance: " << balance << endl;
     }
 
+    // Display client details
     void Display() {
         cout << "Client ID: " << id << endl;
         cout << "Client Name: " << name << endl;
@@ -148,118 +156,165 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-//Employee class
-class Employee : public Validation
-{
+// Employee class inheriting from Validation
+class Employee : public Validation {
 private:
     int id;
     string name;
     string password;
     double salary;
 
-
 public:
-    Employee(int i = 0, string n = " not found ", string p = "0", double s = 0.0)
-    {
-
+    // Employee Constructor
+    Employee(int i = 0, string n = " not found ", string p = "0", double s = 0.0) {
         id = i;
         name = n;
         password = p;
         salary = s;
-
     }
 
-    void setid(int d)
-    {
+    // Setters and Getters for Employee details
+    void setid(int d) {
         id = d;
     }
 
-    int getid()
-    {
+    int getid() {
         return id;
     }
 
-    void setname(string n)
-    {
-        if (Validation::IsValidation(n))
-        {
-
+    void setname(string n) {
+        if (Validation::IsValidation(n)) {
             name = n;
         }
-
-        else
-        {
-            cout << "Enter name size between 5 and 20 characters and must be alphabetic " << endl;
+        else {
+            cout << "Enter name size between 5 and 20 characters and must be alphabetic." << endl;
         }
-
-
-
     }
 
-    string getname()
-    {
+    string getname() {
         return name;
     }
 
-    void setpassword(string p)
-    {
-
-        if (Validation::IsValidationPassword(p))
-        {
-
+    void setpassword(string p) {
+        if (Validation::IsValidationPassword(p)) {
             password = p;
         }
-
-
-        else
-        {
-            cout << "Password must be between 8 and 20 characters " << endl;
+        else {
+            cout << "Password must be between 8 and 20 characters." << endl;
         }
     }
 
-    string getpassword()
-    {
+    string getpassword() {
         return password;
     }
 
-
-    void setsalary(double s)
-    {
-        if (Validation::IsValidationSalary(s))
-        {
+    void setsalary(double s) {
+        if (Validation::IsValidationSalary(s)) {
             salary = s;
         }
-
-        else
-        {
-            cout << "salary must not be less than 5000  " << endl;
+        else {
+            cout << "Salary must not be less than 5000." << endl;
         }
     }
 
-    double getsalary()
-    {
+    double getsalary() {
         return salary;
     }
 
-    void display()
-    {
-
-        cout << "Employee Info :" << endl;
-        cout << "Id : " << id << endl;
-        cout << "Name : " << name << endl;
-        cout << "Password : " << password << endl;
-        cout << "Salary : " << salary << endl;
+    // Display employee details
+    void display() {
+        cout << "Employee Info: " << endl;
+        cout << "Id: " << id << endl;
+        cout << "Name: " << name << endl;
+        cout << "Password: " << password << endl;
+        cout << "Salary: " << salary << endl;
     }
 };
-int main()
-{
-    //clint 
+
+// Admin Class - amira
+class Admin : public Validation {
+private:
+    int id;
+    string name;
+    string password;
+    double salary;
+
+public:
+    // Admin Constructor
+    Admin(int i = 0, string n = "not found", string p = "0", double s = 0.0) {
+        id = i;
+        name = n;
+        password = p;
+        salary = s;
+    }
+
+    // Setters and Getters for Admin details
+    void setId(int d) {
+        id = d;
+    }
+
+    int getId() {
+        return id;
+    }
+
+    void setName(string n) {
+        if (Validation::IsValidation(n)) {
+            name = n;
+        }
+        else {
+            cout << "Invalid name. Name must be between 5 and 20 characters." << endl;
+        }
+    }
+
+    string getName() {
+        return name;
+    }
+
+    void setPassword(string p) {
+        if (Validation::IsValidationPassword(p)) {
+            password = p;
+        }
+        else {
+            cout << "Invalid password. Password must be between 8 and 20 characters." << endl;
+        }
+    }
+
+    string getPassword() {
+        return password;
+    }
+
+    void setSalary(double s) {
+        if (Validation::IsValidationSalary(s)) {
+            salary = s;
+        }
+        else {
+            cout << "Invalid salary. Salary must be at least 5000." << endl;
+        }
+    }
+
+    double getSalary() {
+        return salary;
+    }
+
+    // Display admin details
+    void display() {
+        cout << "Admin Info: " << endl;
+        cout << "Id: " << id << endl;
+        cout << "Name: " << name << endl;
+        cout << "Password: " << password << endl;
+        cout << "Salary: " << salary << endl;
+    }
+};
+
+// Main function for testing
+int main() {
+    // Clint (Client) Testing
     string name, password;
     int Id;
     double balance, deposit, withdraw, transfer;
 
     Clint c, c1, c2;
-    cout << "clint info: " << endl;
+    cout << "Client info: " << endl;
 
     cout << "Enter name: ";
     cin >> name;
@@ -277,15 +332,15 @@ int main()
     cin >> balance;
     c.SetBalance(balance);
 
-    cout << "Enter deposit : ";
+    cout << "Enter deposit amount: ";
     cin >> deposit;
     c.deposit(deposit);
 
-    cout << "Enter withdrawal : ";
+    cout << "Enter withdrawal amount: ";
     cin >> withdraw;
     c.withdraw(withdraw);
 
-    cout << "Enter transfer : ";
+    cout << "Enter transfer amount: ";
     cin >> transfer;
     c1.transferTo(transfer, c2);
 
@@ -297,33 +352,15 @@ int main()
     cout << "Client c2 details: " << endl;
     c2.Display();
 
-
-    cout << endl;
-    //Employee
-
-    cout << "Employee info: " << endl;
+    // Employee Testing
+    cout << endl << "Employee info: " << endl;
     Employee E1;
-    double salary;
-
-
-    cout << "Enter ID: ";
-    cin >> Id;
-    E1.setid(Id);
-
-    cout << "Enter name: ";
-    cin >> name;
-    E1.setname(name);
-
-    cout << "Enter password: ";
-    cin >> password;
-    E1.setpassword(password);
-
-    cout << "Enter salary: ";
-    cin >> salary;
-    E1.setsalary(salary);
-
-    cout << endl;
     E1.display();
+
+    // Admin Testing  - amira
+    cout << endl << "Admin info: " << endl;
+    Admin a1(3, "Amira", "password123", 6000);
+    a1.display();
 
     return 0;
 }
