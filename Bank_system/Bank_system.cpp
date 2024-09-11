@@ -44,14 +44,14 @@ public:
     }
 };
 
-// Client Class inheriting from Validation
-class Clint : public Validation {
-private:
+// Person Class for common attributes
+class Person : public Validation {
+protected:
     int id;
-    string name, password;
-    double balance;
+    string name;
+    string password;
 public:
-    // Setters and Getters for Client details
+    // Setters and Getters for common attributes
     void SetId(int id) {
         this->id = id;
     }
@@ -61,13 +61,12 @@ public:
     }
 
     void SetName(string name) {
-        if (Validation::IsValidation(name)) {
-            this->name = name;
-            cout << "Name set successfully." << " \n" << endl;
+        while (!Validation::IsValidation(name)) {
+            cout << "Invalid name. The name must be alphabetic and between 5 and 20 characters. Try again: ";
+            cin >> name;
         }
-        else {
-            cout << "Invalid name. The name must be alphabetic and between 5 and 20 characters." << " \n" << endl;
-        }
+        this->name = name;
+        cout << "Name set successfully." << " \n" << endl;
     }
 
     string getName() {
@@ -75,27 +74,32 @@ public:
     }
 
     void SetPassword(string password) {
-        if (Validation::IsValidationPassword(password)) {
-            this->password = password;
-            cout << "Password set successfully." << " \n" << endl;
+        while (!Validation::IsValidationPassword(password)) {
+            cout << "Invalid password. The password must be between 8 and 20 characters. Try again: ";
+            cin >> password;
         }
-        else {
-            cout << "Invalid password. The password must be between 8 and 20 characters." << " \n" << endl;
-        }
+        this->password = password;
+        cout << "Password set successfully." << " \n" << endl;
     }
 
     string getPassword() {
         return password;
     }
+};
 
+// Client Class inheriting from Person
+class Clint : public Person {
+private:
+    double balance;
+public:
+    // Setters and Getters for Client details
     void SetBalance(double balance) {
-        if (Validation::IsValidationBalance(balance)) {
-            this->balance = balance;
-            cout << "Balance set successfully." << " \n" << endl;
+        while (!Validation::IsValidationBalance(balance)) {
+            cout << "Invalid balance. The balance must be at least 1500. Try again: ";
+            cin >> balance;
         }
-        else {
-            cout << "Invalid balance. The balance must be at least 1500." << " \n" << endl;
-        }
+        this->balance = balance;
+        cout << "Balance set successfully." << " \n" << endl;
     }
 
     double getBalance() {
@@ -156,12 +160,9 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// Employee class inheriting from Validation
-class Employee : public Validation {
+// Employee class inheriting from Person
+class Employee : public Person {
 private:
-    int id;
-    string name;
-    string password;
     double salary;
 
 public:
@@ -174,47 +175,12 @@ public:
     }
 
     // Setters and Getters for Employee details
-    void setid(int d) {
-        id = d;
-    }
-
-    int getid() {
-        return id;
-    }
-
-    void setname(string n) {
-        if (Validation::IsValidation(n)) {
-            name = n;
-        }
-        else {
-            cout << "Enter name size between 5 and 20 characters and must be alphabetic." << endl;
-        }
-    }
-
-    string getname() {
-        return name;
-    }
-
-    void setpassword(string p) {
-        if (Validation::IsValidationPassword(p)) {
-            password = p;
-        }
-        else {
-            cout << "Password must be between 8 and 20 characters." << endl;
-        }
-    }
-
-    string getpassword() {
-        return password;
-    }
-
     void setsalary(double s) {
-        if (Validation::IsValidationSalary(s)) {
-            salary = s;
+        while (!Validation::IsValidationSalary(s)) {
+            cout << "Salary must not be less than 5000. Try again: ";
+            cin >> s;
         }
-        else {
-            cout << "Salary must not be less than 5000." << endl;
-        }
+        salary = s;
     }
 
     double getsalary() {
@@ -231,12 +197,9 @@ public:
     }
 };
 
-// Admin Class - amira
-class Admin : public Validation {
+// Admin Class
+class Admin : public Person {
 private:
-    int id;
-    string name;
-    string password;
     double salary;
 
 public:
@@ -249,47 +212,12 @@ public:
     }
 
     // Setters and Getters for Admin details
-    void setId(int d) {
-        id = d;
-    }
-
-    int getId() {
-        return id;
-    }
-
-    void setName(string n) {
-        if (Validation::IsValidation(n)) {
-            name = n;
-        }
-        else {
-            cout << "Invalid name. Name must be between 5 and 20 characters." << endl;
-        }
-    }
-
-    string getName() {
-        return name;
-    }
-
-    void setPassword(string p) {
-        if (Validation::IsValidationPassword(p)) {
-            password = p;
-        }
-        else {
-            cout << "Invalid password. Password must be between 8 and 20 characters." << endl;
-        }
-    }
-
-    string getPassword() {
-        return password;
-    }
-
     void setSalary(double s) {
-        if (Validation::IsValidationSalary(s)) {
-            salary = s;
+        while (!Validation::IsValidationSalary(s)) {
+            cout << "Invalid salary. Salary must be at least 5000. Try again: ";
+            cin >> s;
         }
-        else {
-            cout << "Invalid salary. Salary must be at least 5000." << endl;
-        }
+        salary = s;
     }
 
     double getSalary() {
@@ -357,7 +285,7 @@ int main() {
     Employee E1;
     E1.display();
 
-    // Admin Testing  - amira
+    // Admin Testing
     cout << endl << "Admin info: " << endl;
     Admin a1(3, "Amira", "password123", 6000);
     a1.display();
