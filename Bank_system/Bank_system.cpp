@@ -51,22 +51,6 @@ protected:
     string name;
     string password;
 public:
-    Person() {
-        id = 0;
-        name = "";
-    }
-
-    Person(int id, string name) {
-        this->id = id;
-        this->name = name;
-    }
-
-    Person(int id, string name ,string password) {
-        this->id = id;
-        this->name = name;
-        this->password = password;
-    }
-
     // Setters and Getters for common attributes
     void SetId(int id) {
         this->id = id;
@@ -108,22 +92,7 @@ class Clint : public Person {
 private:
     double balance;
 public:
-
-    Clint() {
-        balance = 1500; 
-    }
-
-    Clint(int id, string name, double bal) : Person(id, name) {
-        if (Validation::IsValidationBalance(bal)) {
-          this->  balance = balance;
-        }
-        else {
-            this->balance = 1500; 
-            cout << "Invalid balance provided. Balance initialized to 1500." << endl;
-        }
-        cout << "Parameterized constructor called. Client details initialized." << endl;
-    }
-
+    // Setters and Getters for Client details
     void SetBalance(double balance) {
         while (!Validation::IsValidationBalance(balance)) {
             cout << "Invalid balance. The balance must be at least 1500. Try again: ";
@@ -190,6 +159,7 @@ public:
     }
 };
 
+/////////////////////////////////////////////////////////////////////////////
 // Employee class inheriting from Person
 class Employee : public Person {
 private:
@@ -197,11 +167,11 @@ private:
 
 public:
     // Employee Constructor
-    Employee(int id = 0, string name = " omar ", string passeord = "0", double salary = 0.0) {
-        this->id = id;
-        this ->name = name;
-        this->password = password;
-        this->salary = salary;
+    Employee(int i = 0, string n = " not found ", string p = "0", double s = 0.0) {
+        id = i;
+        name = n;
+        password = p;
+        salary = s;
     }
 
     // Setters and Getters for Employee details
@@ -264,17 +234,46 @@ public:
     }
 };
 
-
 // Main function for testing
 int main() {
     // Clint (Client) Testing
-    Clint c1(1, "Alice", 2000);  
-    c1.deposit(500);             
-    c1.withdraw(100);            
-    Clint c2(2, "Bob", 1500);    
-    c1.transferTo(200, c2);      
+    string name, password;
+    int Id;
+    double balance, deposit, withdraw, transfer;
 
-    // Display client details
+    Clint c, c1, c2;
+    cout << "Client info: " << endl;
+
+    cout << "Enter name: ";
+    cin >> name;
+    c.SetName(name);
+
+    cout << "Enter ID: ";
+    cin >> Id;
+    c.SetId(Id);
+
+    cout << "Enter password: ";
+    cin >> password;
+    c.SetPassword(password);
+
+    cout << "Enter balance: ";
+    cin >> balance;
+    c.SetBalance(balance);
+
+    cout << "Enter deposit amount: ";
+    cin >> deposit;
+    c.deposit(deposit);
+
+    cout << "Enter withdrawal amount: ";
+    cin >> withdraw;
+    c.withdraw(withdraw);
+
+    cout << "Enter transfer amount: ";
+    cin >> transfer;
+    c1.transferTo(transfer, c2);
+
+    c.checkBalance();
+
     cout << "Client c1 details: " << endl;
     c1.Display();
 
@@ -282,10 +281,14 @@ int main() {
     c2.Display();
 
     // Employee Testing
-    Employee e1(3, "Charlie", "empPass", 6000);
-    e1.display();                              
+    cout << endl << "Employee info: " << endl;
+    Employee E1;
+    E1.display();
 
     // Admin Testing
-    Admin a1(4, "Diana", "adminPass", 7000);   
+    cout << endl << "Admin info: " << endl;
+    Admin a1(3, "Amira", "password123", 6000);
     a1.display();
+
+    return 0;
 }
