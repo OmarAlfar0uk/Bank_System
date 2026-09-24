@@ -1,55 +1,134 @@
-# Bank System
+<div align="center">
 
-This is a simple banking system implemented in C++. It allows users to create and manage bank accounts, including depositing, withdrawing, and transferring funds. The system also includes basic validation for user input.
+# 🏦 Bank_System
+### Object-Oriented Banking & Client Account Management System in Modern C++
 
-## Features
+[![C++ 20](https://img.shields.io/badge/C%2B%2B-20-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)](https://en.cppreference.com/)
+[![Architecture](https://img.shields.io/badge/Paradigm-Object--Oriented%20Programming-brightgreen?style=for-the-badge)](#-system-architecture)
+[![Visual Studio](https://img.shields.io/badge/IDE-Visual_Studio-5C2D91?style=for-the-badge&logo=visual-studio&logoColor=white)](https://visualstudio.microsoft.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen?style=for-the-badge)](LICENSE)
+[![Author](https://img.shields.io/badge/Author-Omar%20Alfarouk-orange?style=for-the-badge&logo=github&logoColor=white)](https://github.com/OmarAlfar0uk)
 
-- **Create and Manage Clients:** Add new clients with their name, ID, password, and initial balance.
-- **Deposit Funds:** Add money to a client's account.
-- **Withdraw Funds:** Withdraw money from a client's account, with checks for sufficient balance.
-- **Transfer Funds:** Transfer money between two clients.
-- **Check Balance:** View the current balance of a client's account.
-- **Input Validation:** Ensures that user inputs like name, password, balance, and salary meet predefined criteria.
+<p align="center">
+  <a href="#-key-features">Key Features</a> •
+  <a href="#-class-hierarchy--oop-architecture">OOP Architecture</a> •
+  <a href="#-getting-started">Getting Started</a> •
+  <a href="#-author">Author</a>
+</p>
 
-## Getting Started
+</div>
 
-To get a local copy up and running, follow these simple steps.
+---
+
+## 📌 Executive Overview
+
+**Bank_System** is a robust, console-based banking management software implemented in modern C++. Built to demonstrate clean **Object-Oriented Programming (OOP)** principles—including inheritance hierarchies, encapsulation, abstraction, and polymorphism—it simulates real-world retail banking operations: client account lifecycle management, deposits, withdrawals, fund transfers, and administrative privilege escalation.
+
+> [!NOTE]
+> Implements a dedicated **`Validation`** subsystem enforcing strict constraints on client names, password complexity, minimum balance thresholds, and employee salaries.
+
+---
+
+## ✨ Key Features
+
+| ⚡ Feature | 💡 Description | 🛠 Implementation Detail |
+|---|---|---|
+| **👥 Multi-Tier User Hierarchy** | Granular segregation between Clients, Employees, and Admins | Multi-level inheritance: `Person` → `Client`, `Person` → `Employee` → `Admin` |
+| **💰 Financial Transactions** | Balance queries, secure deposits, withdrawals & transfers | Concurrency-safe balance updates with boundary checks |
+| **🛡️ Input Validation Engine** | Centralized string and numerical validation rules | Dedicated `Validation` class verifying names, passwords, and balances |
+| **⚡ Native Performance** | Compiled with C++20 for optimal execution speed | Memory-safe pointers, references, and standard library algorithms |
+
+---
+
+## 🏛 Class Hierarchy & OOP Architecture
+
+```mermaid
+classDiagram
+    class Validation {
+        +bool IsValidation(string name)
+        +bool ValidatePassword(string password)
+        +bool ValidateBalance(double balance)
+        +bool ValidateSalary(double salary)
+    }
+
+    class Person {
+        #int id
+        #string name
+        #string password
+        +DisplayInfo()
+    }
+
+    class Client {
+        -double balance
+        +Deposit(double amount)
+        +Withdraw(double amount)
+        +TransferTo(double amount, Client& recipient)
+        +CheckBalance()
+    }
+
+    class Employee {
+        #double salary
+        +DisplayInfo()
+    }
+
+    class Admin {
+        +AddEmployee(Employee employee)
+        +ListEmployees()
+    }
+
+    Person <|-- Client : Inherits
+    Person <|-- Employee : Inherits
+    Employee <|-- Admin : Inherits
+    Client ..> Validation : Uses
+    Employee ..> Validation : Uses
+```
+
+---
+
+## ⚡ Tech Stack
+
+- **Language:** C++20 (ISO/IEC 14882:2020)
+- **Compiler:** MSVC (Visual Studio 2022) / GCC / Clang
+- **Paradigm:** Object-Oriented Programming (OOP) & Clean Code
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
+- Visual Studio 2022 (with Desktop Development with C++) or `g++` / `clang++` compiler.
 
-You need a C++ compiler to build the project. If you are on Windows, you can use Visual Studio. If you are on a different operating system, you can use a compiler like g++.
+### Build and Run
 
-### Installation & Running
-
-1. **Clone the repo**
-   ```sh
-   git clone https://github.com/your_username/your_project_name.git
+#### Using Visual Studio
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/OmarAlfar0uk/Bank_System.git
+   cd Bank_System
    ```
-2. **Navigate to the project directory**
-   ```sh
-   cd your_project_name/Bank_system
-   ```
-3. **Compile the code**
-   - **Using g++:**
-     ```sh
-     g++ Bank_system.cpp -o Bank_system
-     ```
-   - **Using Visual Studio:**
-     Open the `Bank_system.sln` file in Visual Studio and build the project.
-4. **Run the executable**
-   - **If you used g++:**
-     ```sh
-     ./Bank_system
-     ```
-   - **If you used Visual Studio:**
-     Run the project from within the IDE.
+2. Open `Bank_system/Bank_system.sln` in Visual Studio.
+3. Select **Release** or **Debug** with target **x64**.
+4. Press `Ctrl + F5` to build and run the application.
 
-## Classes
+#### Using GCC / G++ (CLI)
+```bash
+g++ -std=c++20 Bank_system/Bank_system.cpp -o BankSystem
+./BankSystem
+```
 
-The project is structured into several classes to manage different aspects of the banking system:
+---
 
-- **`Validation`:** A utility class that provides methods for validating user inputs such as name, password, balance, and salary.
-- **`Person`:** A base class that contains common attributes for all individuals in the system, such as `id`, `name`, and `password`. It also inherits from the `Validation` class.
-- **`Client`:** Represents a bank client and inherits from the `Person` class. It includes functionalities specific to clients, such as depositing, withdrawing, transferring funds, and checking the balance.
-- **`Employee`:** Represents a bank employee and inherits from the `Person` class. It includes employee-specific attributes like `salary`.
-- **`Admin`:** Represents a bank administrator and also inherits from the `Person` class, with attributes similar to an employee.
+## 👨‍💻 Author
+
+**Omar Alfarouk**  
+*Full-Stack .NET & Software Engineer*  
+
+- 🌐 **GitHub:** [@OmarAlfar0uk](https://github.com/OmarAlfar0uk)
+- 💼 **LinkedIn:** [omar-alfarouk](https://www.linkedin.com/in/omar-alfarouk-252471251/)
+- 📧 **Email:** [omaralfarouk646@gmail.com](mailto:omaralfarouk646@gmail.com)
+
+---
+
+<div align="center">
+  <sub>Built with ❤️ by Omar Alfarouk. Licensed under the <a href="LICENSE">MIT License</a>.</sub>
+</div>
